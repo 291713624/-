@@ -1,8 +1,6 @@
 # shisanshui
-十三水ui部分
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/291713624/shisanshui)
-
-！[GitHub语言计数] （https://img.shields.io/github/languages/count/291713624/shisanshui）
+![GitHub语言计数](https://img.shields.io/github/languages/count/291713624/shisanshui)
 
 commit信息：
 f35f7daeacf1b3b9489fb03a77f6ad27ae15faf1 (HEAD -> master, origin/master) Update README.md
