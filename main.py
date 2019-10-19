@@ -10,6 +10,7 @@ import 排行榜
 import 模式选择
 import 注册
 import 游戏界面
+import 对战详情
 from 主界面 import mainmeun
 from 登录 import login
 from 对战记录 import fight
@@ -17,7 +18,7 @@ from 排行榜 import paihang
 from 模式选择 import moshi
 from 注册 import apply
 from 游戏界面 import gamepage
-
+from 对战详情 import detail
 
 class Mywindow1(QtWidgets.QMainWindow):
     def __init__(self):
@@ -87,7 +88,14 @@ class Mywindow7(QtWidgets.QMainWindow):
     def open(self):  # 被调用的类需要再编写一个open函数
         self.show()
 
+class Mywindow8(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Mywindow8, self).__init__()
+        self.ui = detail()
+        self.ui.setupUi(self)
 
+    def open(self):  # 被调用的类需要再编写一个open函数
+        self.show()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
@@ -99,6 +107,7 @@ if __name__ == "__main__":
     w5 = Mywindow5()
     w6 = Mywindow6()
     w7 = Mywindow7()
+    w8 = Mywindow8()
     # 将主窗口进行展示调用
     w1.show()
     w1.ui.pushButton.clicked.connect(w2.open)
@@ -114,8 +123,10 @@ if __name__ == "__main__":
     w4.ui.pushButton_5.clicked.connect(w5.open)
     w4.ui.pushButton_3.clicked.connect(w4.close)
     w5.ui.pushButton_3.clicked.connect(w5.close)
+    w5.ui.pushButton.clicked.connect(w8.open)
     w6.ui.pushButton_3.clicked.connect(w6.close)
-
+    w7.ui.pushButton_7.clicked.connect(w7.close)
+    w8.ui.pushButton_3.clicked.connect(w8.close)
     sys.exit(app.exec_())
 
 

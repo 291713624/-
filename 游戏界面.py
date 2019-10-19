@@ -6,16 +6,16 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
 import 登录
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton)
 import requests
-import http.client
 import optparse
 import json
 import os
-global token
+import re
+global card
+global id
 class gamepage(QMainWindow):
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -96,10 +96,42 @@ class gamepage(QMainWindow):
 "border-radius:3px;\n"
 "background:transparent;")
         self.lineEdit.setObjectName("lineEdit")
+        self.lineEdit_2 = QtWidgets.QLineEdit(Form)
+        self.lineEdit_2.setGeometry(QtCore.QRect(290, 130, 361, 41))
+        self.lineEdit_2.setStyleSheet("\n"
+"border-style:none;\n"
+"padding:11px;\n"
+"border-radius:3px;\n"
+"background:transparent;")
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_3 = QtWidgets.QLineEdit(Form)
+        self.lineEdit_3.setGeometry(QtCore.QRect(430, 290, 371, 51))
+        self.lineEdit_3.setStyleSheet("\n"
+"border-style:none;\n"
+"padding:11px;\n"
+"border-radius:3px;\n"
+"background:transparent;")
+        self.lineEdit_3.setObjectName("lineEdit_3")
+        self.lineEdit_4 = QtWidgets.QLineEdit(Form)
+        self.lineEdit_4.setGeometry(QtCore.QRect(290, 190, 361, 41))
+        self.lineEdit_4.setStyleSheet("\n"
+"border-style:none;\n"
+"padding:11px;\n"
+"border-radius:3px;\n"
+"background:transparent;")
+        self.lineEdit_4.setObjectName("lineEdit_4")
+        self.lineEdit_5 = QtWidgets.QLineEdit(Form)
+        self.lineEdit_5.setGeometry(QtCore.QRect(290, 250, 361, 41))
+        self.lineEdit_5.setStyleSheet("\n"
+"border-style:none;\n"
+"padding:11px;\n"
+"border-radius:3px;\n"
+"background:transparent;")
+        self.lineEdit_5.setObjectName("lineEdit_5")
 
         self.retranslateUi(Form)
         self.pushButton_8.clicked.connect(self.display)
-        self.pushButton_9.clicked.connect(self.pushButton_9.show)
+        self.pushButton_9.clicked.connect(self.play)
         self.pushButton_7.clicked.connect(self.pushButton_7.show)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -110,6 +142,7 @@ class gamepage(QMainWindow):
     def display(self):
         global id
         global card
+        global token
         token=登录.token
         print(token)
         url = "https://api.shisanshui.rtxux.xyz/game/open"
@@ -117,18 +150,49 @@ class gamepage(QMainWindow):
         response = requests.request("POST", url, headers=headers)
         res = response.text
         a = res.find('card')
-        b = res.find('id')
-        id = res[b+4:b+9]
         card = res[a + 7:len(res) - 3]
+        b = res.find('id')
+        res = res[b:a]
+        res=re.search(r'[0-9]+',res)
+        id=res.group()
         print(card)
         print(id)
         self.lineEdit.setText(card)
         print(response.text)
-    #def play(self):
-        #os.chdir("C:\Users\许煌标\Desktop")
-        #path_01 = r"shisanshui.exe %s" % (card)
-        #r_v = os.system(path_01)
-        #print(r_v)
+    def play(self):
+        global card
+        global id
+        print(id)
+        card = card.replace("&", "x")
+        card = card.replace("#", "k")
+        card = card.replace("$", "t")
+        card = card.replace("*", "h")
+        print(card)
+        ss = "D:\shisanshui.exe %s" % (card)
+        f = os.popen(ss, "r", 1)
+        res = f.read()
+        print(res)
+        s = res.split("\n")
+        self.lineEdit_2.setText(s[0])
+        self.lineEdit_4.setText(s[1])
+        self.lineEdit_5.setText(s[2])
+        text = {
+            "id": id,
+            "card": [
+                s[0],
+                s[1],
+                s[2]
+            ]
+        }
+        payload = json.dumps(text)
+        url = "https://api.shisanshui.rtxux.xyz/game/submit"
+        headers = {
+            'content-type': "application/json",
+            'x-auth-token': token
+        }
+        response = requests.request("POST", url, data=payload, headers=headers)
+        print(response.text)
+
 
 import file
 if __name__ == "__main__":
@@ -142,4 +206,3 @@ if __name__ == "__main__":
     widget.setWindowIcon(QIcon('web.png'))  # 增加icon图标，如果没有图片可以没有这句
     widget.show()
     sys.exit(app.exec_())
-

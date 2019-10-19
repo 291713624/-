@@ -69,7 +69,6 @@ class paihang(QMainWindow):
         global player_id
         global name
         global score
-        text = ""
         for i in flag:
             s1 = i['player_id']
             s2 = i['name']

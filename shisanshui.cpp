@@ -624,14 +624,14 @@ handcard dz(int t)
 	}	
 	return m;
 }
-int main()
+int main(int argc, char* argv[])
 {
 	char fc,nu;
 	string s;
 	int num,i,n=0,j,m,t;
 	for(i=0;i<13;i++)
 	{
-		cin>>s;
+		s=(string)argv[i+1];
 		if(s[1]=='J')
 		{
 			n=11;
@@ -656,22 +656,22 @@ int main()
 		{
 			n=10;
 		}
-		if(s[0]=='&')//红心 
+		if(s[0]=='x')//红心 
 		{
 			ca[n].d++;
 			ca[n].num++;
 		}
-		else if(s[0]=='$')//黑桃 
+		else if(s[0]=='t')//黑桃 
 		{
 			ca[n].h++;
 			ca[n].num++;
 		}
-		else if(s[0]=='#')//方块
+		else if(s[0]=='k')//方块
 		{
 			ca[n].c++;
 			ca[n].num++;
 		}
-		else if(s[0]=='*')//梅花
+		else if(s[0]=='h')//梅花
 		{
 			ca[n].s++;
 			ca[n].num++;
@@ -846,6 +846,5 @@ int main()
 			}	
 		}
 	}
-	system("pause"); 
 	return 0; 
 }

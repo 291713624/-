@@ -70,19 +70,9 @@ class fight(QMainWindow):
         self.retranslateUi(Form)
         self.pushButton_3.clicked.connect(self.pushButton_3.show)
         self.pushButton_4.clicked.connect(self.display)
-        self.pushButton.clicked.connect(self.search)
+        self.pushButton.clicked.connect(self.pushButton.show)
         QtCore.QMetaObject.connectSlotsByName(Form)
-    def search(self):
-        global token
-        number=self.lineEdit.text()
-        print(number)
-        url = "https://api.shisanshui.rtxux.xyz/history/%s" % (number)
-        print(url)
-        headers = {'x-auth-token': token}
-        print(headers)
-        response = requests.request("GET", url, headers=headers)
 
-        print(response.text)
     def display(self):
         global token
         token = 登录.token
